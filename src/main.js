@@ -1,4 +1,5 @@
 import { initPagination } from "./components/pagination.js";
+import { initSorting } from "./components/sorting.js";
 import "./fonts/ys-display/fonts.css";
 import "./style.css";
 
@@ -39,6 +40,7 @@ function render(action) {
 
   // @todo: использование
   result = applyPagination(result, state, action);
+  result = applySorting(result, state, action);
 
   sampleTable.render(result);
 }
@@ -47,7 +49,7 @@ const sampleTable = initTable(
   {
     tableTemplate: "table",
     rowTemplate: "row",
-    before: [],
+    before: ["header"],
     after: ["pagination"],
   },
   render,
@@ -68,6 +70,12 @@ const applyPagination = initPagination(
     return el;
   },
 );
+
+const applySorting = initSorting([
+  // Нам нужно передать сюда массив элементов, которые вызывают сортировку, чтобы изменять их визуальное представление
+  sampleTable.header.elements.sortByDate,
+  sampleTable.header.elements.sortByTotal,
+]);
 
 const appRoot = document.querySelector("#app");
 appRoot.appendChild(sampleTable.container);

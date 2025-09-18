@@ -1,5 +1,5 @@
 export function initSearching(searchField) {
-  return (query, state, action) => {
+  return (query, state) => {
     // result заменили на query
     return state[searchField]
       ? Object.assign({}, query, {

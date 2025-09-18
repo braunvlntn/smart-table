@@ -11,11 +11,9 @@ import { processFormData } from "./lib/utils.js";
 
 import { initTable } from "./components/table.js";
 import { initSearching } from "./components/searching.js";
-// @todo: подключение
 
 // Исходные данные используемые в render()
-// const { data, ...indexes } = initData(sourceData);
-const api = initData(sourceData);
+const api = initData();
 
 /**
  * Сбор и обработка полей из таблицы
@@ -42,7 +40,6 @@ async function render(action) {
   // let result = [...data]; // копируем для последующего изменения
   let query = {};
 
-  // @todo: использование
   query = applySearching(query, state, action);
   query = applyFiltering(query, state, action);
   query = applyPagination(query, state, action);
@@ -65,7 +62,6 @@ const sampleTable = initTable(
   render
 );
 
-// @todo: инициализация
 const applySearching = initSearching(
   sampleTable.search.elements.search.getAttribute("data-name")
 );

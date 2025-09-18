@@ -45,10 +45,12 @@ async function render(action) {
   // @todo: использование
   // result = applySearching(result, state, action);
   // result = applyFiltering(result, state, action);
-  // result = applyPagination(result, state, action);
+  query = applyPagination(query, state, action);
   // result = applySorting(result, state, action);
 
   const { total, items } = await api.getRecords(query);
+
+  updatePagination(total, query); // перерисовываем пагинатор
 
   sampleTable.render(items);
 }
@@ -60,12 +62,12 @@ const sampleTable = initTable(
     before: ["search", "header", "filter"],
     after: ["pagination"],
   },
-  render,
+  render
 );
 
 // @todo: инициализация
 const applySearching = initSearching(
-  sampleTable.search.elements.search.getAttribute("data-name"),
+  sampleTable.search.elements.search.getAttribute("data-name")
 );
 
 // const applyFiltering = initFiltering(sampleTable.filter.elements, {
@@ -73,7 +75,7 @@ const applySearching = initSearching(
 //   searchBySeller: indexes.sellers, // для элемента с именем searchBySeller устанавливаем массив продавцов
 // });
 
-const applyPagination = initPagination(
+const { applyPagination, updatePagination } = initPagination(
   sampleTable.pagination.elements, // передаём сюда элементы пагинации, найденные в шаблоне
   (el, page, isCurrent) => {
     // и колбэк, чтобы заполнять кнопки страниц данными
@@ -85,7 +87,7 @@ const applyPagination = initPagination(
     label.textContent = page;
 
     return el;
-  },
+  }
 );
 
 const applySorting = initSorting([

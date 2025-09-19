@@ -12,8 +12,14 @@ export function initFiltering(elements) {
     });
   };
 
-  const applyFiltering = (query) => {
+  const applyFiltering = (query, state, action) => {
     // код с обработкой очистки поля
+    if (action && action.name === "clear") {
+      const input = action.parentNode.querySelector("input");
+
+      input.value = "";
+      state[action.getAttribute("data-field")] = "";
+    }
 
     const filter = {};
     Object.keys(elements).forEach((key) => {
